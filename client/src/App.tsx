@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // import { fetchTodos as fetchRestTodos, addTodo as addRestTodo } from './api/rest';
 // import { fetchTodos as fetchGraphQLTodos, addTodo as addGraphQLTodo } from './api/graphql';
@@ -25,6 +25,18 @@ function App() {
       : "light";
   });
 
+  // state to edit an input
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editText, setEditText] = useState("");
+  const editInputRef = useRef<HTMLInputElement>(null);
+
+  // Focus edit input when editing
+  useEffect(() => {
+    if (editingId && editInputRef.current) {
+      editInputRef.current.focus();
+    }
+  }, [editingId]);
+
   // TODO: Fetch todos based on selected API
   useEffect(() => {
     const fetchData = async () => {};
@@ -42,6 +54,25 @@ function App() {
 
   // TODO: Add new todo
   const handleAddTodo = async () => {};
+
+  const startEditing = (todo: Todo) => {
+    setEditingId(todo.id);
+    setEditText(todo.text);
+  };
+
+  const saveEdit = async (id: string) => {
+    // TODO: use ID
+    if (!editText.trim()) return;
+    // const updatedTodo = await updateTodo(id, editText);
+    // setTodos(todos.map((todo) => (todo.id === id ? updatedTodo : todo)));
+    setEditingId(null);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent, id: string) => {
+    // TODO: use ID
+    if (e.key === "Enter") saveEdit(id); // TODO: use ID
+    if (e.key === "Escape") setEditingId(null);
+  };
 
   return (
     <div className={`container ${theme}`}>
@@ -99,7 +130,25 @@ function App() {
             >
               {todo.completed ? "✓" : ""}
             </span>
-            <span className="todo-text">{todo.text}</span>
+
+            {editingId === todo.id ? (
+              <input
+                ref={editInputRef}
+                className="edit-input"
+                value={editText}
+                onChange={(e) => setEditText(e.target.value)}
+                onBlur={() => saveEdit(todo.id)}
+                onKeyDown={(e) => handleKeyDown(e, todo.id)}
+              />
+            ) : (
+              <span
+                className="todo-text"
+                onDoubleClick={() => startEditing(todo)}
+              >
+                {todo.text}
+              </span>
+            )}
+
             <button
               className="delete-btn"
               // onClick={() => handleDeleteTodo(todo.id)}

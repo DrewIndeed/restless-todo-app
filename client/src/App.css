@@ -168,3 +168,37 @@ body {
 .dark .completed .check-circle {
   background: var(--primary-color);
 }
+
+/* Add these styles */
+.todo-text {
+  flex-grow: 1;
+  margin-right: 15px;
+  padding: 5px 0;
+  cursor: text;
+  word-break: break-word;
+}
+
+.edit-input {
+  flex-grow: 1;
+  margin-right: 15px;
+  padding: 5px 8px;
+  font-size: inherit;
+  font-family: inherit;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+.completed .edit-input {
+  opacity: 0.7;
+}
+
+/* Animation for edit mode */
+.todo-list li {
+  transition: all 0.2s ease;
+}
+
+.todo-list li.editing {
+  box-shadow: 0 0 0 2px var(--primary-color);
+}
