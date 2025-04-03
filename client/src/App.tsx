@@ -63,6 +63,7 @@ function App() {
   const saveEdit = async (id: string) => {
     // TODO: use ID
     if (!editText.trim()) return;
+    console.log(id);
     // const updatedTodo = await updateTodo(id, editText);
     // setTodos(todos.map((todo) => (todo.id === id ? updatedTodo : todo)));
     setEditingId(null);

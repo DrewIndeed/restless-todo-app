@@ -5,7 +5,8 @@ import { defineConfig } from "vite";
 // https://vite.dev/config/
 export default defineConfig({
   server: {
-    port: 1234,
+    host: "0.0.0.0", // Allow access from outside
+    port: 1234, // or your desired port
     proxy: {
       "/api": {
         target: "http://localhost:3001", // Your REST backend
@@ -15,6 +16,10 @@ export default defineConfig({
         target: "http://localhost:4000", // GraphQL backend
         changeOrigin: true,
       },
+    },
+    watch: {
+      usePolling: true, // Required for Docker
+      interval: 1000, // Check for changes every second
     },
   },
   preview: {
