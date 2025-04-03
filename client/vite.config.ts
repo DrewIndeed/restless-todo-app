@@ -6,6 +6,16 @@ import { defineConfig } from "vite";
 export default defineConfig({
   server: {
     port: 1234,
+    proxy: {
+      "/api": {
+        target: "http://localhost:3001", // Your REST backend
+        changeOrigin: true,
+      },
+      "/graphql": {
+        target: "http://localhost:4000", // GraphQL backend
+        changeOrigin: true,
+      },
+    },
   },
   preview: {
     port: 1234,

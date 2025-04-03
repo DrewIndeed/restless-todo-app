@@ -79,7 +79,7 @@ body {
 
 .todo-form input {
   flex: 1;
-  padding: 8px;
+  padding: 8px 10px;
   margin-right: 10px;
   border-radius: 0.5rem;
   outline: none;
