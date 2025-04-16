@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  client:
+    image: restless-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "1234:1234"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    networks:
+      - app-network
+
+  api:
+    image: restless-server-rest
+    build:
+      context: ./server/rest
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./server/rest:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
